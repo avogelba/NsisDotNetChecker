@@ -1,6 +1,9 @@
 # .NET Framework Checker NSIS plugin
 The .NET Framework Checker NSIS plugin is used to detect if the required .NET Framework is installed and if it is not - plugin will download and install the required package. The plugin's C++ source code is based on the [work of Aaron Stebner](http://blogs.msdn.com/b/astebner/archive/2009/06/16/9763379.aspx).
 
+# .NET Framework Checker GUI
+The .NET Framework Checker GUI is used to detect if the required .NET Framework is installed. The GUI's C++ source code is based on the [work of Aaron Stebner](http://blogs.msdn.com/b/astebner/archive/2009/06/16/9763379.aspx).
+
 ## Structure:
  - `bin` - compiled NSIS plugin (ready-to-use)
  - `plugin` - contains source code for building DotNetChecker plugin in Visual Studio 2010
