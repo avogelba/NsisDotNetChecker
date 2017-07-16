@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DotNetChecker", "plugin\DotNetChecker.vcxproj", "{EE997742-B1B4-4FA0-A46E-E8F2614D457B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DotNetCheckerGUI", "GUI\DotNetCheckerGUI.vcxproj", "{D6A8EB9D-7803-4386-8CD8-60D50FF82227}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE997742-B1B4-4FA0-A46E-E8F2614D457B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EE997742-B1B4-4FA0-A46E-E8F2614D457B}.Debug|Win32.Build.0 = Debug|Win32
+		{EE997742-B1B4-4FA0-A46E-E8F2614D457B}.Debug|x64.ActiveCfg = Debug|Win32
+		{EE997742-B1B4-4FA0-A46E-E8F2614D457B}.Release|Win32.ActiveCfg = Release|Win32
+		{EE997742-B1B4-4FA0-A46E-E8F2614D457B}.Release|Win32.Build.0 = Release|Win32
+		{EE997742-B1B4-4FA0-A46E-E8F2614D457B}.Release|x64.ActiveCfg = Release|Win32
+		{D6A8EB9D-7803-4386-8CD8-60D50FF82227}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D6A8EB9D-7803-4386-8CD8-60D50FF82227}.Debug|Win32.Build.0 = Debug|Win32
+		{D6A8EB9D-7803-4386-8CD8-60D50FF82227}.Debug|x64.ActiveCfg = Debug|x64
+		{D6A8EB9D-7803-4386-8CD8-60D50FF82227}.Debug|x64.Build.0 = Debug|x64
+		{D6A8EB9D-7803-4386-8CD8-60D50FF82227}.Release|Win32.ActiveCfg = Release|Win32
+		{D6A8EB9D-7803-4386-8CD8-60D50FF82227}.Release|Win32.Build.0 = Release|Win32
+		{D6A8EB9D-7803-4386-8CD8-60D50FF82227}.Release|x64.ActiveCfg = Release|x64
+		{D6A8EB9D-7803-4386-8CD8-60D50FF82227}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
