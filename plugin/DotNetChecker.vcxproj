@@ -14,6 +14,7 @@
     <ProjectGuid>{EE997742-B1B4-4FA0-A46E-E8F2614D457B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>DotNetChecker</RootNamespace>
+    <ProjectName>DotNetChecker</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -81,13 +82,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="nsis\api.h" />
+    <ClInclude Include="nsis\nsis_tchar.h" />
     <ClInclude Include="nsis\pluginapi.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="detectfx.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="pluginapi.lib" />
+    <Library Include="nsis\pluginapi.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

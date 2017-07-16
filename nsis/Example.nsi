@@ -26,7 +26,8 @@ RequestExecutionLevel admin
 Section "Dummy Section" SecDummy
 
   SetOutPath "$INSTDIR"
-  
+
+  ;Check for Net 4.5, defined in DotNetChecker.nsh using DotNetChecker.DLL  
   !insertmacro CheckNetFramework 45
   
   ;Store installation folder

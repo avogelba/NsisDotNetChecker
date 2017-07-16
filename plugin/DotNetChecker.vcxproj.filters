@@ -21,6 +21,9 @@
     <ClInclude Include="nsis\pluginapi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="nsis\nsis_tchar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="detectfx.cpp">
@@ -28,6 +31,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="pluginapi.lib" />
+    <Library Include="nsis\pluginapi.lib" />
   </ItemGroup>
 </Project>
