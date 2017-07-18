@@ -4,8 +4,8 @@
 //
 
 //Set to latest .NET that can be detected + a incrementing version number
-#define VER_FILEVERSION             4,7,349,0
-#define VER_FILEVERSION_STR         "4.7.349.0\0"
+#define VER_FILEVERSION             4,7,350,0
+#define VER_FILEVERSION_STR         "4.7.350.0\0"
 
 #define VER_PRODUCTVERSION          4,7,0,0
 #define VER_PRODUCTVERSION_STR      "4.7\0"

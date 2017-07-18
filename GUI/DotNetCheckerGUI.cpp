@@ -1209,6 +1209,19 @@ bool version::getinfo()
 }
 */
 
+//Msg Box to show parameters
+void ErrMsg(const wchar_t * strType, const char * strMsg,  ...) {
+
+	va_list vl;
+	va_start(vl, strMsg);
+	char cBuff[1024];  // May need to be bigger
+	vsprintf(cBuff, strMsg, vl);
+	wchar_t wBuff[1024];
+	mbstowcs(wBuff, cBuff, strlen(cBuff) + 1);//Plus null
+
+	MessageBox(NULL, wBuff, strType, MB_OK);
+}
+
 bool cmdOptionExists(char** begin, char** end, const std::string& option)
 {
 	return std::find(begin, end, option) != end;
@@ -1477,12 +1490,38 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		//ausgabe in datei
 		char * filename = getCmdOption(argv, argv + argc, "-f");
 		wchar_t wtext2[20];
-		if (strlen(filename)<=1)
-		{
+		if (filename == NULL) {
 			MessageBox(NULL, L"Filename missing", L"File", MB_OK);
 			return false;
 		}
+		//not null now it can be copied
 		mbstowcs(wtext2, filename, strlen(filename) + 1);//Plus null
+		std::string sFilename(filename);
+
+		if (strlen(filename)<=2) //to short, probably next parameter
+		{
+			
+			ErrMsg(L"File", "Filename to short: %s", sFilename.c_str());
+			//MessageBox(NULL, L"Filename to short", L"File", MB_OK);
+			return false;
+		}
+		if ((strlen(filename) == 3) && (strstr(filename, "nul") != 0 || strstr(filename, "com") != 0 || strstr(filename, "lpt") != 0 || strstr(filename, "con") != 0 || strstr(filename, "aux") != 0)) {
+			
+			ErrMsg(L"File", "Filename uses system reserved name: %s", sFilename.c_str());
+			//MessageBox(NULL, L"Filename uses system reserved names", L"File", MB_OK);
+			return false;
+		}
+		for (int i = 0; filename[i] != '\0'; ++i)
+		{
+			if ( '\\' == filename[i] || '\/' == filename[i] || '\<' == filename[i] || '\>' == filename[i] || '\|' == filename[i] || '\"' == filename[i] || '\?' == filename[i] || '\*' == filename[i])
+			{
+				ErrMsg(L"File", "Illegal character \"%c\" in Filename: %s", filename[i], sFilename.c_str());
+				//MessageBox(NULL, L"Filename has illegal characters", L"File", MB_OK);
+				return false;
+			}
+		}
+		
+		
 		fName = wtext2;
 		fileOut = true;
 		//MessageBox(NULL, fName, L"File", MB_OK);
