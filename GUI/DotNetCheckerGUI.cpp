@@ -40,6 +40,10 @@ const TCHAR *g_szNetfx40FullRegKeyName = _T("Software\\Microsoft\\NET Framework 
 const TCHAR *g_szNetfx40SPxRegValueName = _T("Servicing");
 const TCHAR *g_szNetfx45RegKeyName = _T("Software\\Microsoft\\NET Framework Setup\\NDP\\v4\\Full");
 const TCHAR *g_szNetfx45RegValueName = _T("Release");
+const TCHAR *g_szNetfx46RegKeyName = g_szNetfx45RegKeyName;
+const TCHAR *g_szNetfx46RegValueName = g_szNetfx45RegValueName;
+const TCHAR *g_szNetfx47RegKeyName = g_szNetfx45RegKeyName;
+const TCHAR *g_szNetfx47RegValueName = g_szNetfx45RegValueName;
 const TCHAR *g_szNetfxStandardRegValueName = _T("Install");
 const TCHAR *g_szNetfxStandardSPxRegValueName = _T("SP");
 const TCHAR *g_szNetfxStandardVersionRegValueName = _T("Version");
@@ -62,26 +66,33 @@ const int g_iNetfx40VersionMinor = 0;
 const int g_iNetfx40VersionBuild = 30319;
 const int g_iNetfx40VersionRevision = 0;
 
-// Version information for final release of .NET Framework 4.5
+// Version information for final release of .NET Framework 4.5 and 4.5.1 (4.5.1 updated as per Windows 8.1 Release value)
 const int g_dwNetfx45ReleaseVersion = 378389;
-
-// Version information for final release of .NET Framework 4.5.1
-const int g_dwNetfx451ReleaseVersion = 378675;
+const int g_dwNetfx451Win8ReleaseVersion = 378675; //Windows 8.1
+const int g_dwNetfx451ReleaseVersion = 378758; // Windows 8, Windows 7 SP1, or Windows Vista SP2
 
 // Version information for final release of .NET Framework 4.5.2
 const int g_dwNetfx452ReleaseVersion = 379893;
 
 // Version information for final release of .NET Framework 4.6
-const int g_dwNetfx46ReleaseVersion = 393295;
+const int g_dwNetfx46Win10ReleaseVersion = 393295; //Windows 10
+const int g_dwNetfx46ReleaseVersion = 393297;
 
 // Version information for final release of .NET Framework 4.6.1
-const int g_dwNetfx461ReleaseVersion = 394254;
+const int g_dwNetfx461Win10ReleaseVersion = 394254; //Windows 10
+const int g_dwNetfx461ReleaseVersion = 394271;
 
 // Version information for final release of .NET Framework 4.6.2
-const int g_dwNetfx462ReleaseVersion = 394802;
+const int g_dwNetfx462Win10ReleaseVersion = 394802; //Windows 10 Anniversary Update
+const int g_dwNetfx462ReleaseVersion = 394806;
 
 // Version information for final release of .NET Framework 4.7
-const int g_dwNetfx47ReleaseVersion = 460798;
+const int g_dwNetfx47Win10ReleaseVersion = 460798; //Windows 10 Creators Update
+const int g_dwNetfx47ReleaseVersion = 460805;
+
+// Version information for final release of .NET Framework 4.7.1
+const int g_dwNetfx471Win10ReleaseVersion = 461308; //Windows 10 Fall Creators Update
+const int g_dwNetfx471ReleaseVersion = 461310;
 
 // Constants for known .NET Framework versions used with the GetRequestedRuntimeInfo API
 const TCHAR *g_szNetfx10VersionString = _T("v1.0.3705");
@@ -110,6 +121,7 @@ bool IsNetfx46Installed();
 bool IsNetfx461Installed();
 bool IsNetfx462Installed();
 bool IsNetfx47Installed();
+bool IsNetfx471Installed();
 bool RegistryGetValue(HKEY, const TCHAR*, const TCHAR*, DWORD, LPBYTE, DWORD);
 
 
@@ -671,7 +683,7 @@ bool IsNetfx451Installed()
 
 	if (RegistryGetValue(HKEY_LOCAL_MACHINE, g_szNetfx45RegKeyName, g_szNetfx45RegValueName, NULL, (LPBYTE)&dwRegValue, sizeof(DWORD)))
 	{
-		if (g_dwNetfx451ReleaseVersion <= dwRegValue)
+		if (g_dwNetfx451ReleaseVersion <= dwRegValue || g_dwNetfx451Win8ReleaseVersion)
 			bRetValue = true;
 	}
 
@@ -721,7 +733,7 @@ bool IsNetfx46Installed()
 
 	if (RegistryGetValue(HKEY_LOCAL_MACHINE, g_szNetfx45RegKeyName, g_szNetfx45RegValueName, NULL, (LPBYTE)&dwRegValue, sizeof(DWORD)))
 	{
-		if (g_dwNetfx46ReleaseVersion <= dwRegValue)
+		if (g_dwNetfx46ReleaseVersion <= dwRegValue || g_dwNetfx46Win10ReleaseVersion <= dwRegValue)
 			bRetValue = true;
 	}
 
@@ -746,7 +758,7 @@ bool IsNetfx461Installed()
 
 	if (RegistryGetValue(HKEY_LOCAL_MACHINE, g_szNetfx45RegKeyName, g_szNetfx45RegValueName, NULL, (LPBYTE)&dwRegValue, sizeof(DWORD)))
 	{
-		if (g_dwNetfx461ReleaseVersion <= dwRegValue)
+		if (g_dwNetfx461ReleaseVersion <= dwRegValue || g_dwNetfx461Win10ReleaseVersion <= dwRegValue)
 			bRetValue = true;
 	}
 
@@ -771,7 +783,7 @@ bool IsNetfx462Installed()
 
 	if (RegistryGetValue(HKEY_LOCAL_MACHINE, g_szNetfx45RegKeyName, g_szNetfx45RegValueName, NULL, (LPBYTE)&dwRegValue, sizeof(DWORD)))
 	{
-		if (g_dwNetfx462ReleaseVersion <= dwRegValue)
+		if (g_dwNetfx462ReleaseVersion <= dwRegValue || g_dwNetfx462Win10ReleaseVersion <= dwRegValue)
 			bRetValue = true;
 	}
 
@@ -796,13 +808,36 @@ bool IsNetfx47Installed()
 
 	if (RegistryGetValue(HKEY_LOCAL_MACHINE, g_szNetfx45RegKeyName, g_szNetfx45RegValueName, NULL, (LPBYTE)&dwRegValue, sizeof(DWORD)))
 	{
-		if (g_dwNetfx47ReleaseVersion <= dwRegValue)
+		if (g_dwNetfx47ReleaseVersion <= dwRegValue || g_dwNetfx47Win10ReleaseVersion <= dwRegValue)
 			bRetValue = true;
 	}
 
 	return bRetValue;
 }
 
+/******************************************************************
+Function Name:	IsNetfx471Installed
+Description:	Uses the detection method recommended at
+http://msdn.microsoft.com/en-us/library/ee942965(v=vs.110).aspx
+to determine whether the .NET Framework 4.7.1 is
+installed on the machine
+Inputs:         NONE
+Results:        true if the .NET Framework 4.7.1 is installed
+false otherwise
+******************************************************************/
+bool IsNetfx471Installed()
+{
+  bool bRetValue = false;
+  DWORD dwRegValue = 0;
+
+  if (RegistryGetValue(HKEY_LOCAL_MACHINE, g_szNetfx47RegKeyName, g_szNetfx47RegValueName, NULL, (LPBYTE)&dwRegValue, sizeof(DWORD)))
+  {
+    if (g_dwNetfx471ReleaseVersion <= dwRegValue || g_dwNetfx471Win10ReleaseVersion <= dwRegValue)
+      bRetValue = true;
+  }
+
+  return bRetValue;
+}
 
 /******************************************************************
 Function Name:  RegistryGetValue
@@ -1209,19 +1244,6 @@ bool version::getinfo()
 }
 */
 
-//Msg Box to show parameters
-void ErrMsg(const wchar_t * strType, const char * strMsg,  ...) {
-
-	va_list vl;
-	va_start(vl, strMsg);
-	char cBuff[1024];  // May need to be bigger
-	vsprintf(cBuff, strMsg, vl);
-	wchar_t wBuff[1024];
-	mbstowcs(wBuff, cBuff, strlen(cBuff) + 1);//Plus null
-
-	MessageBox(NULL, wBuff, strType, MB_OK);
-}
-
 bool cmdOptionExists(char** begin, char** end, const std::string& option)
 {
 	return std::find(begin, end, option) != end;
@@ -1270,6 +1292,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	int iNetfx461SPLevel = -1;
 	int iNetfx462SPLevel = -1;
 	int iNetfx47SPLevel = -1;
+	int iNetfx471SPLevel = -1;
 
 	if (cmdOptionExists(argv, argv + argc, "-h"))
 	{
@@ -1284,7 +1307,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		_tcscat_s(szOutputString, _T("\nOptions:"));
 		_tcscat_s(szOutputString, _T("\n  -v x.y.z   Find Version x.y.z, return TRUE if found"));
 		_tcscat_s(szOutputString, _T("\n             Version can be 1.0 1.1 2.0 3.0 3.5 4.0 4.5"));
-		_tcscat_s(szOutputString, _T("\n             4.5.1 4.5.2 4.6 4.6.1 4.6.2 4.7"));
+		_tcscat_s(szOutputString, _T("\n             4.5.1 4.5.2 4.6 4.6.1 4.6.2 4.7 4.7.1"));
 		_tcscat_s(szOutputString, _T("\n  -h         This Help screen"));
 		_tcscat_s(szOutputString, _T("\n  -p         Print Versions on Screen"));
 		_tcscat_s(szOutputString, _T("\n  -f out.ext Output to File out.txt"));
@@ -1323,6 +1346,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	bool bNetfx461Installed = (IsNetfx461Installed() && CheckNetfxVersionUsingMscoree(g_szNetfx40VersionString));
 	bool bNetfx462Installed = (IsNetfx462Installed() && CheckNetfxVersionUsingMscoree(g_szNetfx40VersionString));
 	bool bNetfx47Installed = (IsNetfx47Installed() && CheckNetfxVersionUsingMscoree(g_szNetfx40VersionString));
+	bool bNetfx471Installed = (IsNetfx471Installed() && CheckNetfxVersionUsingMscoree(g_szNetfx40VersionString));
 
 
 
@@ -1466,6 +1490,17 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 			}
 		}
+		else if (lstrcmpW(ptr1, L"4.7.1") == 0) {
+			if (bNetfx471Installed) {
+				return true;
+			}
+			else
+			{
+				return false;
+
+			}
+		}
+
 		else {
 			return false;
 		}
@@ -1490,38 +1525,12 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		//ausgabe in datei
 		char * filename = getCmdOption(argv, argv + argc, "-f");
 		wchar_t wtext2[20];
-		if (filename == NULL) {
+		if (strlen(filename)<=1)
+		{
 			MessageBox(NULL, L"Filename missing", L"File", MB_OK);
 			return false;
 		}
-		//not null now it can be copied
 		mbstowcs(wtext2, filename, strlen(filename) + 1);//Plus null
-		std::string sFilename(filename);
-
-		if (strlen(filename)<=2) //to short, probably next parameter
-		{
-			
-			ErrMsg(L"File", "Filename to short: %s", sFilename.c_str());
-			//MessageBox(NULL, L"Filename to short", L"File", MB_OK);
-			return false;
-		}
-		if ((strlen(filename) == 3) && (strstr(filename, "nul") != 0 || strstr(filename, "com") != 0 || strstr(filename, "lpt") != 0 || strstr(filename, "con") != 0 || strstr(filename, "aux") != 0)) {
-			
-			ErrMsg(L"File", "Filename uses system reserved name: %s", sFilename.c_str());
-			//MessageBox(NULL, L"Filename uses system reserved names", L"File", MB_OK);
-			return false;
-		}
-		for (int i = 0; filename[i] != '\0'; ++i)
-		{
-			if ( '\\' == filename[i] || '\/' == filename[i] || '\<' == filename[i] || '\>' == filename[i] || '\|' == filename[i] || '\"' == filename[i] || '\?' == filename[i] || '\*' == filename[i])
-			{
-				ErrMsg(L"File", "Illegal character \"%c\" in Filename: %s", filename[i], sFilename.c_str());
-				//MessageBox(NULL, L"Filename has illegal characters", L"File", MB_OK);
-				return false;
-			}
-		}
-		
-		
 		fName = wtext2;
 		fileOut = true;
 		//MessageBox(NULL, fName, L"File", MB_OK);
@@ -1795,6 +1804,21 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	else
 	{
 		_tcscat_s(szOutputString, _T("\n\n.NET Framework 4.7 is not installed."));
+	}
+	if (bNetfx471Installed)
+	{
+		iNetfx471SPLevel = GetNetfxSPLevel(g_szNetfx45RegKeyName, g_szNetfx40SPxRegValueName);
+
+		if (iNetfx471SPLevel > 0)
+			_stprintf_s(szMessage, MAX_PATH, _T("\n\n.NET Framework 4.7.1 service pack %i is installed."), iNetfx47SPLevel);
+		else
+			_stprintf_s(szMessage, MAX_PATH, _T("\n\n.NET Framework 4.7.1 is installed with no service packs."));
+
+		_tcscat_s(szOutputString, szMessage);
+	}
+	else
+	{
+		_tcscat_s(szOutputString, _T("\n\n.NET Framework 4.7.1 is not installed."));
 	}
 
 	if (setPrint)

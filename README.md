@@ -4,6 +4,15 @@ The .NET Framework Checker NSIS plugin is used to detect if the required .NET Fr
 # .NET Framework Checker GUI
 The .NET Framework Checker GUI is used to detect if the required .NET Framework is installed. The GUI's C++ source code is based on the [work of Aaron Stebner](http://blogs.msdn.com/b/astebner/archive/2009/06/16/9763379.aspx).
 
+# Initail Code
+[Aaron Stebner MSDN Article](https://blogs.msdn.microsoft.com/astebner/2009/06/16/sample-code-to-detect-net-framework-install-state-and-service-pack-level/)
+
+# Version Informations
+[.Net Version Informations](https://docs.microsoft.com/en-us/dotnet/framework/migration-guide/how-to-determine-which-versions-are-installed)
+
+# NIS .Net Checker
+[Alexei Sitnikov](https://github.com/ReVolly/NsisDotNetChecker)
+
 ## Structure:
  - `bin` - compiled NSIS plugin (ready-to-use)
  - `plugin` - contains source code for building DotNetChecker plugin in Visual Studio 2010
@@ -26,6 +35,14 @@ The .NET Framework Checker GUI is used to detect if the required .NET Framework 
 ## Usage
 
 The Plugin and its Macro can be invoked by any Function or within any Section of the NSI script.
+
+### .NET 4.7.1
+
+	!insertmacro CheckNetFramework 471
+  
+### .NET 4.7
+
+	!insertmacro CheckNetFramework 47
 
 ### .NET 4.6.2
 
